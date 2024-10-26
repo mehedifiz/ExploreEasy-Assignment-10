@@ -50,6 +50,28 @@ async function run() {
       res.send(result);
     });
 
+
+
+    app.put('/updateSpot/:id', async (req, res) => {
+      const id = new ObjectId(req.params.id);
+      console.log(id)
+      const updateData = {
+        $set: {
+          imgURLs: req.body.imgURLs,
+          touristSpotName: req.body.touristSpotName,
+          countryName: req.body.countryName,
+          location: req.body.location,
+          shortDescription: req.body.shortDescription,
+          seasonName: req.body.seasonName,
+          avrCost: req.body.avrCost,
+          travelTime: req.body.travelTime,
+          totalVisitors: req.body.totalVisitors
+        }
+      };
+      const result = await touristSpotsCollection.updateOne({ _id: id }, updateData);
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
